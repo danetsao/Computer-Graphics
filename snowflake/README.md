@@ -1,4 +1,3 @@
 # Koch Snowflake
 
-Image of the Koch Snowflake
-![Koch Snowflake](https://github.com/danetsao/computer-graphics/blob/master/images/snowflake.png)
+![](https://github.com/danetsao/computer-graphics/blob/main/images/snowflake.png)
