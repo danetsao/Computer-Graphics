@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Dane Tsao, CS435, Project 1, 12175276</title>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+      #version 300 es
+
+      in vec2 aPosition;
+
+      void main() {
+        gl_PointSize = 10.0;
+        gl_Position = vec4(aPosition, 0.0, 1.0);
+      }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+      #version 300 es
+
+      precision mediump float;
+
+      uniform bool isBlue;
+
+      out vec4 fColor;
+
+      void main() {
+        if (isBlue) {
+          fColor = vec4(0.0, 0.0, 1.0, 1.0);
+        } else {
+          fColor = vec4(1.0, 0.0, 0.0, 1.0);
+        }
+      }
+    </script>
+
+    <script type="text/javascript" src="../Common/initShaders.js"></script>
+    <script src="../Common/MVnew.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+  </head>
+
+  <div id="coordinates"></div>
+  <body>
+    <canvas id="gl-canvas" width="512" height="512"></canvas>
+  </body>
+</html>
