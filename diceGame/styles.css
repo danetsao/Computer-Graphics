@@ -1,0 +1,50 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #e6f1fa;
+}
+
+h1 {
+  color: #2e8b57;
+}
+
+p {
+  font-size: 18px;
+}
+
+button, select {
+  font-size: 16px;
+  padding: 10px 15px;
+  margin: 10px;
+  border: none;
+  border-radius: 5 cap;
+  background: #2e8b57;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover, select:hover {
+  background: #1e6645;
+}
+
+canvas {
+  background: #59a3e0;
+  margin: 15px auto;
+  border: 3px solid #2e8b57;
+  display: block;
+}
+
+label {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+h1#message {
+  font-size: 22px;
+  margin-top: 15px;
+}
+
+h1#sumDis {
+  font-size: 20px;
+  margin: 15px 0;
+}

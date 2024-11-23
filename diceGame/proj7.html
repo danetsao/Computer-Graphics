@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Dane Tsao, CS435, Project 7, 12175276</title>
+  <link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+  #version 300 es
+
+  in  vec4 aPosition;
+  in  vec3 aNormal;
+  out vec4 vColor;
+
+
+  in vec2 aTexCoord;
+
+  out vec2 vTexCoord;
+
+  uniform vec4 uAmbientProduct, uDiffuseProduct, uSpecularProduct;
+  uniform mat4 uModelViewMatrix;
+  uniform mat4 uProjectionMatrix;
+  uniform vec4 uLightPosition;
+  uniform float uShininess;
+  uniform vec4 inColor;
+
+  void main()
+  {
+
+
+      vec3 pos = -(uModelViewMatrix * aPosition).xyz;
+
+      vec3 normalizedNormal = normalize(aNormal);
+
+      //fixed light postion
+
+      vec3 light = uLightPosition.xyz;
+      vec3 L = normalize(light - pos);
+
+
+      vec3 E = normalize(-pos);
+      vec3 H = normalize(L + E);
+
+      vec4 NN = vec4(aNormal,0);
+
+      // Transform vertex normal into eye coordinates
+
+      vec3 N = normalize((uModelViewMatrix*NN).xyz);
+
+      // Compute terms in the illumination equation
+      vec4 ambient = uAmbientProduct;
+
+      float Kd = max(dot(L, N), 0.0);
+      vec4  diffuse = Kd*uDiffuseProduct;
+
+      float Ks = pow( max(dot(N, H), 0.0), uShininess );
+      vec4  specular = Ks * uSpecularProduct;
+
+      if( dot(L, N) < 0.0 ) {
+      specular = vec4(0.1, 0.0, 0.1, 1.0);
+      }
+
+      gl_Position = uProjectionMatrix * uModelViewMatrix *aPosition;
+      vColor = (ambient + diffuse +specular) * inColor;
+
+      vColor.a = 1.0;
+
+      vTexCoord = aTexCoord;
+  }
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+  #version 300 es
+
+  precision mediump float;
+
+
+  in vec4 vColor;
+  in vec2 vTexCoord;
+  out vec4 fColor;
+
+  uniform sampler2D uTextureMap;
+
+  void
+  main()
+  {
+    fColor = texture(uTextureMap, vTexCoord) * vColor;
+  }
+</script>
+
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MVnew.js"></script>
+<script type="text/javascript" src="proj7.js"></script>
+
+<body>
+  <h1>Dane Tsao, CS435, Project 7, 12175276</h1>
+  <p>
+    Hello, welcome to Dice Roll Guesser. The goal of this game is to guess the sum of the dice rolls. You can choose the number of dice to roll and the sum to guess. If you guess correctly, you win! Good luck!
+  </p>
+  <canvas id="gl-canvas" width="512" height="512">
+    Oops ... your browser doesn't support the HTML5 canvas element
+  </canvas>
+  <div>
+    <button id="roll">Roll the Dice</button>
+  </div>
+  
+  <div>
+    <label for="dieCount">Number of Dice:</label>
+    <select id="dieCount">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+  </div>
+    <div>
+    <label for="sum">Guess the sum:</label>
+    <select id="sum">
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <option value="18">18</option>
+    </select>
+  </div>
+  <div>
+    <h1 id="die1">Die 1: </h1>
+    <h1 id="die2"></h1>
+    <h1 id="die3"></h1>
+    <h1 id="sumDis">Sum:</h1>
+    <h1 id="message"></h1>
+  </div>
+</body>
+
+<img id="dietex1" src="./textures/dietex1.png" style="display:none;">
+<img id="dietex2" src="./textures/dietex2.png" style="display:none;">
+<img id="dietex3" src="./textures/dietex3.png" style="display:none;">
+<img id="dietex4" src="./textures/dietex4.png" style="display:none;">
+<img id="dietex5" src="./textures/dietex5.png" style="display:none;">
+<img id="dietex6" src="./textures/dietex6.png" style="display:none;">
+
+</html>
